@@ -1,13 +1,14 @@
 import h5py
 import numpy as np
 import yaml
+from config.ProjectConfig import ProjectConfig
 import os
 
 
 class FileLoader:
     def __init__(self) -> None:
-        self.data_dir = 'data/'
-        self.setting_dir = 'config/'
+        self.data_dir = ProjectConfig.DATA_DIR
+        self.config_dir = ProjectConfig.CONFIG_DIR
 
 
 class H5pyFileLoader(FileLoader):
@@ -38,18 +39,18 @@ class YamlFileLoader(FileLoader):
 
     def load_yaml_file(self, file_name):
         print("loading yaml file")
-        file = open(self.setting_dir + file_name, 'r', encoding="utf-8")
+        file = open(self.config_dir + file_name, 'r', encoding="utf-8")
         file_data = file.read()
         file.close()
 
         data = yaml.load(file_data)
         print(data)
-        print("类型：", type(data))
+        print("type：", type(data))
         return data
 
     def save_yaml_file(self, file_name, object):
         print("saving yaml file")
-        file = open(self.setting_dir + file_name, 'w', encoding='utf-8')
+        file = open(self.config_dir + file_name, 'w', encoding='utf-8')
         yaml.dump(object, file)
         file.close()
 
