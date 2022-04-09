@@ -4,25 +4,27 @@
 ## 架构讲解
 本架构是基于机器学习流程和实际科研实践总结出来的。按顺序如下展示
 1. data：存放原始数据
-2. data_dealer：数据预处理，包括原始数据处理和torch数据处理
-3. source：存放中间数据，例如knn图或者整个模型 
-4. data_torch_dealer：将data或source中处理好的数据转换为torch可迭代数据
-5. config：定义模型超参数和训练超参数
-6. model：搭建模型
-7. loss：构建损失函数
-8. trainer：针对model的训练器
-9. tester：针对model的测试器
-10. method: trainer和tester之上的更宏观的一层，用来描述整个方法，包括model，loss，trainer和tester。
-11. result：存放训练结果和测试结果
-12. utils：在上述过程中可以剥离的一般化函数，例如文件读取，可视化。
-13. MultiMethodTestFramework: 在method层面进行统一的测试，例如多数据集多方法的对比。
+2. raw_data_dealer：原始数据处理
+3. source：存放中间数据，例如knn图
+4. torch_dataset：将data或source中处理好的数据封装为torch数据
+5. torch_data_loader：将torch数据转换为torch可迭代数据
+6. config：定义模型超参数和训练超参数
+7. model：搭建模型
+8. loss：构建损失函数
+9. trainer：针对model的训练器
+10. tester：针对model的测试器
+11. method: trainer和tester之上的更宏观的一层，用来描述整个方法，包括model，loss，trainer和tester。
+12. result：存放训练结果和测试结果 
+13. packages：在上述过程中可以剥离的一般化函数，例如文件读取，可视化，不建议改动
+14. utils：当packages无法满足需求，在此自定义函数。
+15. MultiMethodTestFramework: 在method层面进行统一的测试，例如多数据集多方法的对比。
 ## 架构是如何与ML科研流程对应的
 1. 收集数据，存放于data文件夹
-2. 查看和清晰数据，在transform文件夹中编写清洗程序，将清洗后的数据存放于source下的data文件夹。
+2. 查看和清晰数据，在raw_data_dealer文件夹中编写清洗程序，将清洗后的数据存放于source下的data文件夹。
 3. 搭建模型，在model中创建模型
 4. 编写损失函数，在loss中创建
-5. 搭建数据迭代器，在在torch_data_dealer文件夹中编写
-6. 搭建训练器，在trainer中创建训练类，使用config中定义的超参数，传入model中的模型,loss中的损失函数和data_torch_dealer中的训练数据迭代器，训练好的模型课存放于source中，训练日志和结果存放于result中
+5. 搭建数据迭代器，在torch_dataset和torch_data_loader文件夹中编写
+6. 搭建训练器，在trainer中创建训练类，使用config中定义的超参数，传入model中的模型,loss中的损失函数和torch_data_loader中的训练数据迭代器，训练好的模型课存放于source中，训练日志和结果存放于result中
 7. 建测试器，在tester中创建测试类，使用config中定义的超参数，传入source中的模型参数和data_torch_dealer中的测试数据迭代器和utils中的指标，测试日志和结果存放于result中
 8. 在method中创建继承类，将上述的data，model，loss，trainer和tester进行统筹。
 9. 查看训练结果和测试结果。
