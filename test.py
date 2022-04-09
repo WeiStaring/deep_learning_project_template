@@ -1,4 +1,4 @@
-from utils.FileLoader import YamlFileLoader
+from packages.FileLoader import YamlFileLoader
 
 yaml_loader = YamlFileLoader()
 a = {"a": 1,"b":1}
