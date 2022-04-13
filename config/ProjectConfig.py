@@ -1,5 +1,5 @@
 class ProjectConfig:
-    DATA_DIR = "data/"
-    SOURCE_DIR = "source/"
+    RAW_DATA_DIR = "raw_data/"
+    DEALED_DATA_DIR = "dealed_data/"
     CONFIG_DIR = "config/"
     RESULT_DIR = "result/"
